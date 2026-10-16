@@ -13,7 +13,7 @@ pkgver=1.0
 pkgrel=1
 pkgdesc='A simple third-party GTK4 Emby/Jellyfin client (local custom build with danmaku server support)'
 arch=('x86_64' 'aarch64')
-url='https://github.com/rdevils7/tsukimi-danmaku'
+url='https://github.com/rdevils7/RDplayer'
 license=('GPL-3.0-or-later')
 depends=(
 	'mpv' 'libadwaita' 'gstreamer' 'gtk4' 'dconf' 'glib2' 'pango' 'libseccomp'

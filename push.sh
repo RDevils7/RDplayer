@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Push tsukimi-danmaku to GitHub.
+# Push RDplayer to GitHub.
 #
 # Usage:  bash push.sh /path/to/token.txt
 #   token.txt must contain ONLY your GitHub Personal Access Token (classic, repo scope)
@@ -24,14 +24,14 @@ if [ "${#TOKEN}" -lt 30 ]; then
   echo "  ⚠ token looks too short/invalid — make sure the file contains ONLY the raw token, no quotes or extra text."
 fi
 USER="rdevils7"
-REPO="tsukimi-danmaku"
+REPO="RDplayer"
 
 echo "Creating GitHub repo '$REPO' (ignored if it already exists)..."
 HTTP_CODE=$(curl -s -o /tmp/gh_repo.json -w "%{http_code}" -X POST "https://api.github.com/user/repos" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"$REPO\",\"description\":\"tsukimi media player with custom danmaku (danmu_api) server support — auto select source & episode\",\"private\":false,\"has_issues\":true,\"has_wiki\":false}")
+  -d "{\"name\":\"$REPO\",\"description\":\"RDplayer media player with custom danmaku (danmu_api) server support — auto select source & episode\",\"private\":false,\"has_issues\":true,\"has_wiki\":false}")
 echo "  repo create HTTP $HTTP_CODE"
 if [ "$HTTP_CODE" != "201" ] && [ "$HTTP_CODE" != "422" ]; then
   echo "  ⚠ repo creation failed. GitHub says:"

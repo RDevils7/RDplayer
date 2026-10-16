@@ -1,12 +1,12 @@
 #!/bin/bash
-# tsukimi-danmaku installer
+# RDplayer installer
 # One-line install on Arch-based distros (CachyOS, Arch, Manjaro, EndeavourOS):
-#   git clone https://github.com/<you>/tsukimi-danmaku.git
-#   cd tsukimi-danmaku
+#   git clone https://github.com/<you>/RDplayer.git
+#   cd RDplayer
 #   ./install.sh
 set -euo pipefail
 
-echo "==> tsukimi-danmaku 安装脚本"
+echo "==> RDplayer 安装脚本"
 
 if [ "$(id -u)" -eq 0 ]; then
     echo "错误：请不要以 root 运行此脚本（makepkg 禁止 root）。请用普通用户执行。" >&2

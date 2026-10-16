@@ -19,8 +19,8 @@
 ### Arch / CachyOS（推荐）
 
 ```bash
-git clone https://github.com/rdevils7/tsukimi-danmaku.git
-cd tsukimi-danmaku
+git clone https://github.com/rdevils7/RDplayer.git
+cd RDplayer
 ./install.sh          # 自动用 pacman 安装依赖并以 makepkg -si 构建安装
 ```
 

@@ -8,7 +8,7 @@ Release:        0.%{snapshot_release}%{?dist}
 Summary:        GTK4 Jellyfin client for Linux built from the latest Git commit
 
 License:        GPL-3.0-only
-URL:            https://github.com/rdevils7/tsukimi-danmaku
+URL:            https://github.com/rdevils7/RDplayer
 # For COPR SCM builds with the "make srpm" method, .copr/Makefile generates
 # both source archives into the SRPM source directory before rpmbuild -bs.
 Source0:        %{name}-%{version}.tar.gz
