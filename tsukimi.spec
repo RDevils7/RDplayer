@@ -1,13 +1,13 @@
-%global fallback_version 26.9.2
+%global fallback_version 1.0
 %global pkg_version %{?version_from_tag:%{version_from_tag}}%{!?version_from_tag:%{fallback_version}}
 
-Name:           tsukimi
+Name:           rdplayer
 Version:        %{pkg_version}
 Release:        %autorelease
 Summary:        GTK4 Jellyfin client for Linux
 
 License:        GPL-3.0-only
-URL:            https://github.com/tsukinaha/tsukimi
+URL:            https://github.com/rdevils7/tsukimi-danmaku
 # For COPR SCM builds with the "make srpm" method, .copr/Makefile generates
 # both source archives into the SRPM source directory before rpmbuild -bs.
 Source0:        %{name}-%{version}.tar.gz
@@ -39,7 +39,7 @@ BuildRequires:  pkgconfig(mpv) >= 0.38
 BuildRequires:  pkgconfig(openssl)
 
 %description
-Tsukimi is a GTK4-based third-party Jellyfin client for Linux. It uses libmpv
+RDplayer is a GTK4-based third-party Jellyfin client for Linux. It uses libmpv
 for video playback and GStreamer for music playback, and also offers partial
 compatibility with Emby servers.
 
@@ -54,7 +54,7 @@ compatibility with Emby servers.
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang tsukimi
 
 %files -f %{name}.lang
 %license LICENSE

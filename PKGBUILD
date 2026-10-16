@@ -1,5 +1,5 @@
 # Maintainer: you (local custom build)
-# Based on AUR tsukimi 26.9.2-1 by tippfehlr <tippfehlr@archlinux.org>
+# Based on AUR tsukimi 26.9.2-1; renamed to RDplayer 1.0 (local custom build)
 #
 # This PKGBUILD builds from the LOCAL working tree (your modified fork), not
 # upstream. It packages the custom danmaku changes:
@@ -8,12 +8,12 @@
 #   - auto-select danmaku by source priority (tencent > iqiyi > youku > 360)
 #     and by episode number parsed from the filename.
 
-pkgname=tsukimi
-pkgver=26.9.2
+pkgname=rdplayer
+pkgver=1.0
 pkgrel=1
 pkgdesc='A simple third-party GTK4 Emby/Jellyfin client (local custom build with danmaku server support)'
 arch=('x86_64' 'aarch64')
-url='https://github.com/tsukinaha/tsukimi'
+url='https://github.com/rdevils7/tsukimi-danmaku'
 license=('GPL-3.0-or-later')
 depends=(
 	'mpv' 'libadwaita' 'gstreamer' 'gtk4' 'dconf' 'glib2' 'pango' 'libseccomp'

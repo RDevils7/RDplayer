@@ -38,4 +38,4 @@ case " ${ID:-} ${ID_LIKE:-} " in
         ;;
 esac
 
-echo "==> 完成。运行 'tsukimi' 启动播放器。"
+echo "==> 完成。运行 'rdplayer' 启动播放器。"

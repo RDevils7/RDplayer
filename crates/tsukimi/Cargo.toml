@@ -1,6 +1,6 @@
 [package]
-name = "tsukimi"
-version = "26.9.2"
+name = "rdplayer"
+version = "1.0"
 edition.workspace = true
 rust-version.workspace = true
 description = "A simple Jellyfin Client written by GTK4-RS"

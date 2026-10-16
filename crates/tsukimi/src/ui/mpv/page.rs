@@ -1229,7 +1229,7 @@ impl MPVPage {
     fn on_shutdown(&self) {
         close_on_error!(
             self,
-            gettext("MPV has been shutdown, Application will exit.\nTsukimi can't restart MPV.",)
+            gettext("MPV has been shutdown, Application will exit.\nRDplayer can't restart MPV.",)
         );
     }
 

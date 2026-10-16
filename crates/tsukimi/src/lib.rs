@@ -31,7 +31,7 @@ pub static USER_AGENT: LazyLock<String> =
     LazyLock::new(|| format!("{}/{} - {}", CLIENT_ID, version(), env::consts::OS));
 
 pub const APP_ID: &str = "moe.tsuna.tsukimi";
-pub const CLIENT_ID: &str = "Tsukimi";
+pub const CLIENT_ID: &str = "RDplayer";
 const APP_RESOURCE_PATH: &str = "/moe/tsuna/tsukimi";
 const GRESOURCE_FILE: &str = "tsukimi.gresource";
 

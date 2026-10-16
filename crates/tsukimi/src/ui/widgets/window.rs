@@ -1049,7 +1049,7 @@ impl Window {
         let about_action = gtk::gio::ActionEntry::builder("about")
             .activate(|window, _, _| {
                 let about = adw::AboutDialog::builder()
-                    .application_name("Tsukimi")
+                    .application_name("RDplayer")
                     .version(crate::config::version())
                     .comments("A simple third-party Jellyfin client.")
                     // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'

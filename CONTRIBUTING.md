@@ -2,7 +2,7 @@
 
 ## Translations
 
-If you'd like to help translating **Tsukimi** into your language, please head over to [Weblate](https://hosted.weblate.org/projects/tsukimi/).
+If you'd like to help translating **RDplayer** into your language, please head over to [Weblate](https://hosted.weblate.org/projects/tsukimi/).
 
 <a href="https://hosted.weblate.org/engage/tsukimi/">
     <img src="https://hosted.weblate.org/widget/tsukimi/main/multi-auto.svg" alt="Translate Status" />
@@ -16,8 +16,8 @@ Prefer your distribution's packaged `tsukimi` build when it is available. Distro
 packages should already provide correct runtime dependencies and resource
 installation.
 
-If you want to build Tsukimi from source, see `meson.build` for dependency
-requirements. Tsukimi needs relatively new GTK4 and libadwaita releases.
+If you want to build RDplayer from source, see `meson.build` for dependency
+requirements. RDplayer needs relatively new GTK4 and libadwaita releases.
 
 ### Development
 
@@ -51,7 +51,7 @@ meson compile -C build
 
 ## AI Contribution Policy
 
-Tsukimi is a project by humans for humans. We prefer contributions that
+RDplayer is a project by humans for humans. We prefer contributions that
 are produced by human creativity, we expect a human to take full
 responsibility for each contribution, and we will take more joy in
 reviewing contributions when there's people at the other end of the

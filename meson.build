@@ -1,7 +1,7 @@
 project(
-    'tsukimi',
+    'rdplayer',
     'rust',
-    version: '26.9.2',
+    version: '1.0',
     meson_version: '>= 1.1',
     default_options: ['warning_level=2', 'werror=false', 'buildtype=release'],
 )

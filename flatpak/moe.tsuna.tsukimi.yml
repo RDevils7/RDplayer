@@ -10,7 +10,7 @@ add-extensions:
     version: "24.08"
     directory: lib/ffmpeg
     add-ld-path: .
-command: tsukimi
+command: rdplayer
 finish-args:
   - "--device=dri"
   - "--share=ipc"
@@ -43,7 +43,7 @@ build-options:
     RUSTFLAGS: "-L /app/lib"
 
 modules:
-  - name: tsukimi
+  - name: rdplayer
     buildsystem: meson
     sources:
       - type: git

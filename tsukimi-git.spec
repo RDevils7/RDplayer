@@ -1,14 +1,14 @@
-%global fallback_version 26.9.2
+%global fallback_version 1.0
 %global pkg_version %{?version_from_git:%{version_from_git}}%{!?version_from_git:%{fallback_version}}
 %global snapshot_release %{?git_snapshot:%{git_snapshot}}%{!?git_snapshot:1}
 
-Name:           tsukimi-git
+Name:           rdplayer-git
 Version:        %{pkg_version}
 Release:        0.%{snapshot_release}%{?dist}
 Summary:        GTK4 Jellyfin client for Linux built from the latest Git commit
 
 License:        GPL-3.0-only
-URL:            https://github.com/tsukinaha/tsukimi
+URL:            https://github.com/rdevils7/tsukimi-danmaku
 # For COPR SCM builds with the "make srpm" method, .copr/Makefile generates
 # both source archives into the SRPM source directory before rpmbuild -bs.
 Source0:        %{name}-%{version}.tar.gz
@@ -39,10 +39,10 @@ BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
 BuildRequires:  pkgconfig(mpv) >= 0.38
 BuildRequires:  pkgconfig(openssl)
 
-Conflicts:      tsukimi
+Conflicts:      rdplayer
 
 %description
-Tsukimi is a GTK4-based third-party Jellyfin client for Linux. This package is
+RDplayer is a GTK4-based third-party Jellyfin client for Linux. This package is
 built from the latest Git commit and is intended for users who want to track
 development snapshots instead of tagged releases.
 
@@ -62,12 +62,12 @@ development snapshots instead of tagged releases.
 %files -f tsukimi.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/tsukimi
+%{_bindir}/%{name}
 %{_datadir}/applications/moe.tsuna.tsukimi.desktop
 %{_datadir}/glib-2.0/schemas/moe.tsuna.tsukimi.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/moe.tsuna.tsukimi.svg
 %{_datadir}/metainfo/moe.tsuna.tsukimi.metainfo.xml
-%{_datadir}/tsukimi/tsukimi.gresource
+%{_datadir}/rdplayer/tsukimi.gresource
 
 %changelog
 %autochangelog

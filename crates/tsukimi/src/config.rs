@@ -9,7 +9,7 @@ pub const LOCALEDIR: &str = match option_env!("TSUKIMI_LOCALEDIR") {
 
 pub const PKGDATADIR: &str = match option_env!("TSUKIMI_PKGDATADIR") {
     Some(path) => path,
-    None => "/usr/share/tsukimi",
+    None => "/usr/share/rdplayer",
 };
 
 pub const fn compile_version() -> &'static str {

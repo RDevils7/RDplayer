@@ -19,15 +19,25 @@ if [ ! -f "$TOKEN_FILE" ]; then
 fi
 
 TOKEN="$(tr -d '[:space:]' < "$TOKEN_FILE")"
+echo "  token length: ${#TOKEN} (expected: classic=40, fine-grained=93)"
+if [ "${#TOKEN}" -lt 30 ]; then
+  echo "  ⚠ token looks too short/invalid — make sure the file contains ONLY the raw token, no quotes or extra text."
+fi
 USER="rdevils7"
 REPO="tsukimi-danmaku"
 
 echo "Creating GitHub repo '$REPO' (ignored if it already exists)..."
-curl -s -o /tmp/gh_repo.json -w "  HTTP %{http_code}\n" -X POST "https://api.github.com/user/repos" \
+HTTP_CODE=$(curl -s -o /tmp/gh_repo.json -w "%{http_code}" -X POST "https://api.github.com/user/repos" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"$REPO\",\"description\":\"tsukimi media player with custom danmaku (danmu_api) server support — auto select source & episode\",\"private\":false,\"has_issues\":true,\"has_wiki\":false}" || true
+  -d "{\"name\":\"$REPO\",\"description\":\"tsukimi media player with custom danmaku (danmu_api) server support — auto select source & episode\",\"private\":false,\"has_issues\":true,\"has_wiki\":false}")
+echo "  repo create HTTP $HTTP_CODE"
+if [ "$HTTP_CODE" != "201" ] && [ "$HTTP_CODE" != "422" ]; then
+  echo "  ⚠ repo creation failed. GitHub says:"
+  sed -n 's/.*"message"[ ]*:[ ]*"\([^"]*\)".*/  \1/p' /tmp/gh_repo.json | head -1
+  echo "  (this usually means the token is invalid / expired / revoked, or lacks the 'repo' scope)"
+fi
 
 echo "Configuring remote and pushing..."
 git remote remove origin 2>/dev/null || true

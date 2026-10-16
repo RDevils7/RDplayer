@@ -68,7 +68,7 @@
     </section>
   </menu>
   <template class="AppWindow" parent="AdwApplicationWindow">
-    <property name="title">Tsukimi</property>
+    <property name="title">RDplayer</property>
     <property name="width-request">500</property>
     <property name="height-request">350</property>
     <property name="icon-name">moe.tsuna.tsukimi</property>
@@ -193,7 +193,7 @@
                             <property name="sidebar-width-fraction">0.13</property>
                             <property name="sidebar">
                               <object class="AdwNavigationPage">
-                                <property name="title">Tsukimi</property>
+                                <property name="title">RDplayer</property>
                                 <property name="child">
                                   <object class="AdwToolbarView">
                                     <child type="top">
@@ -338,7 +338,7 @@
                                             <child>
                                               <object class="AdwNavigationPage" id="mainpage">
                                                 <property name="tag">mainpage</property>
-                                                <property name="title">Tsukimi</property>
+                                                <property name="title">RDplayer</property>
                                                 <child>
                                                   <object class="GtkStack" id="insidestack">
                                                     <property name="hexpand">True</property>
