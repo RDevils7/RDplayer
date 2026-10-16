@@ -192,6 +192,7 @@ mod imp {
         pub audio_listbox: TemplateChild<gtk::ListBox>,
         pub timeout: RefCell<Option<glib::source::SourceId>>,
         pub back_timeout: RefCell<Option<glib::source::SourceId>>,
+        pub single_click_source: RefCell<Option<glib::source::SourceId>>,
         pub back: RefCell<Option<Back>>,
         pub seeking: Cell<bool>,
         pub(super) danmaku_sync: DanmakuSync,
@@ -222,6 +223,9 @@ mod imp {
 
         #[template_child]
         pub volume_bar: TemplateChild<VolumeBar>,
+
+        #[template_child]
+        pub maximize_button: TemplateChild<gtk::Button>,
 
         #[property(get, set, nullable)]
         pub current_video: RefCell<Option<TuItem>>,
@@ -1749,8 +1753,64 @@ impl MPVPage {
     }
 
     #[template_callback]
-    fn left_click_cb(&self) {
-        self.imp().video.pause();
+    fn left_click_cb(&self, n_press: i32, _x: f64, _y: f64) {
+        let imp = self.imp();
+        if n_press >= 2 {
+            // Double click on the video: enter/exit fullscreen and cancel
+            // the pending single-click pause.
+            if let Some(source) = imp.single_click_source.take() {
+                source.remove();
+            }
+            self.toggle_fullscreen();
+        } else {
+            // Delay the single-click pause slightly so that a double click
+            // can be recognized before pausing.
+            let page = self.downgrade();
+            let source = glib::timeout_add_local_once(
+                std::time::Duration::from_millis(250),
+                move || {
+                    if let Some(obj) = page.upgrade() {
+                        let imp = obj.imp();
+                        imp.single_click_source.take();
+                        imp.video.pause();
+                    }
+                },
+            );
+            imp.single_click_source.replace(Some(source));
+        }
+    }
+
+    #[template_callback]
+    fn on_minimize_clicked(&self) {
+        if let Some(window) = self.window() {
+            window.minimize();
+        }
+    }
+
+    #[template_callback]
+    fn on_maximize_clicked(&self) {
+        let Some(window) = self.window() else {
+            return;
+        };
+        let imp = self.imp();
+        if window.is_fullscreen() {
+            window.unfullscreen();
+            return;
+        }
+        if window.is_maximized() {
+            window.unmaximize();
+            imp.maximize_button.set_icon_name("window-maximize-symbolic");
+        } else {
+            window.maximize();
+            imp.maximize_button.set_icon_name("window-restore-symbolic");
+        }
+    }
+
+    #[template_callback]
+    fn on_close_clicked(&self) {
+        if let Some(window) = self.window() {
+            window.close();
+        }
     }
 
     #[template_callback]
