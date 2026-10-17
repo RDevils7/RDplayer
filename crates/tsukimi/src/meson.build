@@ -11,8 +11,6 @@ else
     message('Building in debug mode')
 endif
 
-cargo_bin = cargo_target_dir / rust_target / meson.project_name()
-
 git = find_program('git', required: false)
 
 git_release = false
@@ -92,14 +90,11 @@ custom_target(
     install: true,
     install_dir: bindir,
     command: [
+        python,
+        files('cargo_build.py'),
         cargo,
-        'build',
-    ]
-    + cargo_options
-    + [
-        '&&',
-        'cp',
-        cargo_bin,
+        meson.project_name(),
         '@OUTPUT@',
-    ],
+    ]
+    + cargo_options,
 )

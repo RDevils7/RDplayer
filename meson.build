@@ -80,6 +80,7 @@ dependency('gstreamer-plugins-bad-1.0', version: '>= 1.16')
 dependency('gstreamer-bad-audio-1.0', version: '>= 1.16')
 
 cargo = find_program('cargo', required: true)
+python = find_program('python3', 'python', required: true)
 cargo_version = run_command(cargo, '--version', check: true).stdout().strip()
 message(cargo_version)
 rustc_version = run_command('rustc', '--version', check: true).stdout().strip()
