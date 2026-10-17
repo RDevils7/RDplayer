@@ -1766,16 +1766,14 @@ impl MPVPage {
             // Delay the single-click pause slightly so that a double click
             // can be recognized before pausing.
             let page = self.downgrade();
-            let source = glib::timeout_add_local_once(
-                std::time::Duration::from_millis(250),
-                move || {
+            let source =
+                glib::timeout_add_local_once(std::time::Duration::from_millis(250), move || {
                     if let Some(obj) = page.upgrade() {
                         let imp = obj.imp();
                         imp.single_click_source.take();
                         imp.video.pause();
                     }
-                },
-            );
+                });
             imp.single_click_source.replace(Some(source));
         }
     }
@@ -1799,7 +1797,8 @@ impl MPVPage {
         }
         if window.is_maximized() {
             window.unmaximize();
-            imp.maximize_button.set_icon_name("window-maximize-symbolic");
+            imp.maximize_button
+                .set_icon_name("window-maximize-symbolic");
         } else {
             window.maximize();
             imp.maximize_button.set_icon_name("window-restore-symbolic");

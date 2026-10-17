@@ -74,8 +74,9 @@ impl DanDanClient {
     }
 
     pub fn instance() -> Self {
-        static INSTANCE: LazyLock<DanDanClient> =
-            LazyLock::new(|| DanDanClient { client: reqwest::Client::default() });
+        static INSTANCE: LazyLock<DanDanClient> = LazyLock::new(|| DanDanClient {
+            client: reqwest::Client::default(),
+        });
         INSTANCE.clone()
     }
 
@@ -102,7 +103,9 @@ impl ClientPrelude for DanDanClient {
             .expect("danmaku server config poisoned")
             .signed;
         if signed {
-            HEADER_GENERATOR.get().map(|generator| generator.header(path))
+            HEADER_GENERATOR
+                .get()
+                .map(|generator| generator.header(path))
         } else {
             None
         }

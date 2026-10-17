@@ -309,7 +309,11 @@ impl DanmakuPopover {
             .build();
 
         SETTINGS
-            .bind("mpv-danmaku-server", &imp.danmaku_server_entry.get(), "text")
+            .bind(
+                "mpv-danmaku-server",
+                &imp.danmaku_server_entry.get(),
+                "text",
+            )
             .build();
     }
 

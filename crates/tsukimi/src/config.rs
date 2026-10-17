@@ -18,10 +18,7 @@ fn windows_share_root() -> Option<std::path::PathBuf> {
         exedir.join("share"),
         exedir.parent().map(|p| p.join("share")).unwrap_or_default(),
     ];
-    for base in candidates
-        .into_iter()
-        .filter(|p| !p.as_os_str().is_empty())
-    {
+    for base in candidates.into_iter().filter(|p| !p.as_os_str().is_empty()) {
         if base.join("rdplayer").join("tsukimi.gresource").exists() {
             return Some(base);
         }
@@ -92,7 +89,6 @@ pub fn pkgdatadir() -> &'static str {
 pub fn localedir() -> &'static str {
     LOCALEDIR.as_str()
 }
-
 
 pub const fn compile_version() -> &'static str {
     const fn fallback(version: Option<&'static str>) -> &'static str {

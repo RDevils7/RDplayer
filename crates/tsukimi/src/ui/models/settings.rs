@@ -138,11 +138,7 @@ impl Settings {
 
     pub fn danmaku_server(&self) -> Option<String> {
         let value = self.string(Self::KEY_MPV_DANMAKU_SERVER).to_string();
-        if value.is_empty() {
-            None
-        } else {
-            Some(value)
-        }
+        if value.is_empty() { None } else { Some(value) }
     }
 
     pub fn danmaku_cache_map(&self) -> String {

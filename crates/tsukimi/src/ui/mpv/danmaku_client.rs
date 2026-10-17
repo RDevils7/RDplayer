@@ -6,11 +6,9 @@ use std::{
 use dandanapi_client::*;
 use mutsumi::Danmaku;
 
-use crate::{
-    ui::{
-        models::SETTINGS,
-        mpv::danmaku::DanmakuExt,
-    },
+use crate::ui::{
+    models::SETTINGS,
+    mpv::danmaku::DanmakuExt,
 };
 
 const X_APPID: &str = "e9imrhcexn";
@@ -88,7 +86,10 @@ impl DanmakuClient {
             let src = lower[pos + 5..]
                 .trim()
                 .trim_end_matches(|c| c == ')' || c == '】');
-            if let Some(rank) = Self::SOURCE_PRIORITY.iter().position(|s| src.starts_with(s)) {
+            if let Some(rank) = Self::SOURCE_PRIORITY
+                .iter()
+                .position(|s| src.starts_with(s))
+            {
                 return rank as u32;
             }
         }
