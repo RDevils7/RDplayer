@@ -65,11 +65,6 @@ uuid = "1.23"
 wl-proxy = "0.1"
 xxhash-rust = "0.8.15"
 
-# glycin uses memfd/shm FD passing and is Linux-only; Windows builds fall
-# back to GDK's built-in image loaders (see image_paintable.rs).
-[target.'cfg(target_os = "linux")'.dependencies]
-glycin = { version = "3.1.0", default-features = false }
-
 [profile.release]
 lto = true
 strip = true

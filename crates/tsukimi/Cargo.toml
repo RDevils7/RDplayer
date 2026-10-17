@@ -49,9 +49,6 @@ moka = { workspace = true, features = ["future"] }
 mutsumi.workspace = true
 dandanapi-client.workspace = true
 
-[target.'cfg(target_os = "linux")'.dependencies]
-glycin = { workspace = true, features = ["gdk4", "tokio"] }
-
 [dev-dependencies]
 cargo-husky = { workspace = true, features = ["user-hooks"] }
 
@@ -63,6 +60,9 @@ render = []
 build_libmpv = []
 
 [target.'cfg(target_os = "linux")'.dependencies]
+# glycin uses memfd/shm FD passing and is Linux-only; Windows builds fall
+# back to GDK's built-in image loaders (see image_paintable.rs).
+glycin = { version = "3.1.0", default-features = false, features = ["gdk4", "tokio"] }
 mpris-server.workspace = true
 gdk-x11 = { workspace = true, features = [
   "v4_18",
