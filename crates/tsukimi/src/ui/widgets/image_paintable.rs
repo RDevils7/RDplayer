@@ -21,6 +21,7 @@ use crate::utils::spawn;
 
 const DEFAULT_ANIMATION_FRAME_DELAY: Duration = Duration::from_millis(100);
 
+#[cfg(target_os = "linux")]
 mod imp {
     use std::cell::RefCell;
 
@@ -102,6 +103,7 @@ mod imp {
     }
 }
 
+#[cfg(target_os = "linux")]
 glib::wrapper! {
     /// A paintable that displays an animated image decoded by glycin.
     ///
@@ -112,6 +114,7 @@ glib::wrapper! {
         @implements gdk::Paintable;
 }
 
+#[cfg(target_os = "linux")]
 pub async fn paintable_from_file(
     file: gio::File, cancellable: Option<gio::Cancellable>,
 ) -> Result<gdk::Paintable> {
@@ -134,6 +137,7 @@ pub async fn paintable_from_file(
     }
 }
 
+#[cfg(target_os = "linux")]
 impl ImagePaintable {
     fn new(image: glycin::Image, frame: glycin::Frame) -> Self {
         let obj = glib::Object::new::<Self>();
@@ -188,4 +192,15 @@ impl ImagePaintable {
             }
         ));
     }
+}
+
+/// Non-Linux fallback: glycin relies on Linux memfd/FD passing and cannot be
+/// compiled on other platforms. Use GDK's built-in image loaders instead
+/// (static images are supported; animated images show their first frame).
+#[cfg(not(target_os = "linux"))]
+pub async fn paintable_from_file(
+    file: gio::File, _cancellable: Option<gio::Cancellable>,
+) -> Result<gdk::Paintable> {
+    let texture = gdk::Texture::from_file(&file)?;
+    Ok(texture.upcast())
 }

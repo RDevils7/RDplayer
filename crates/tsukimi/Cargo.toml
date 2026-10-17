@@ -45,10 +45,12 @@ xxhash-rust = { workspace = true, features = ["xxh3"] }
 futures-util.workspace = true
 itertools.workspace = true
 moka = { workspace = true, features = ["future"] }
-glycin = { workspace = true, features = ["gdk4", "tokio"] }
 
 mutsumi.workspace = true
 dandanapi-client.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+glycin = { workspace = true, features = ["gdk4", "tokio"] }
 
 [dev-dependencies]
 cargo-husky = { workspace = true, features = ["user-hooks"] }
