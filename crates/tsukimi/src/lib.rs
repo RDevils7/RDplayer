@@ -41,9 +41,26 @@ pub fn run() -> gtk::glib::ExitCode {
     // Initialize gettext
     unsafe { setlocale(LocaleCategory::LcAll, String::new()) };
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").expect("Failed to set textdomain codeset");
-    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR).expect("Invalid argument passed to bindtextdomain");
+    bindtextdomain(GETTEXT_PACKAGE, localedir()).expect("Invalid argument passed to bindtextdomain");
 
     textdomain(GETTEXT_PACKAGE).expect("Invalid string passed to textdomain");
+
+    // On Windows the GSettings schema compiler output lives next to the exe, so
+    // point GSettings (and GStreamer) at the bundled runtime dirs before they
+    // are needed.
+    #[cfg(target_os = "windows")]
+    {
+        if std::env::var("GSETTINGS_SCHEMA_DIR").is_err() {
+            if let Some(dir) = crate::config::gsettings_schema_dir() {
+                std::env::set_var("GSETTINGS_SCHEMA_DIR", dir);
+            }
+        }
+        if std::env::var("GST_PLUGIN_PATH").is_err() {
+            if let Some(dir) = crate::config::gstreamer_plugin_dir() {
+                std::env::set_var("GST_PLUGIN_PATH", dir);
+            }
+        }
+    }
 
     adw::init().expect("Failed to initialize Adwaita");
     mutsumi::init();
@@ -59,7 +76,7 @@ pub fn run() -> gtk::glib::ExitCode {
 }
 
 fn register_gio_resources() {
-    let path = std::path::Path::new(PKGDATADIR).join(GRESOURCE_FILE);
+    let path = std::path::Path::new(pkgdatadir()).join(GRESOURCE_FILE);
     let resources = gtk::gio::Resource::load(path).expect("Failed to load resources.");
     gtk::gio::resources_register(&resources);
 }

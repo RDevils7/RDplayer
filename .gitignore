@@ -21,3 +21,7 @@
 
 # WorkBuddy local memory (not part of the project)
 .workbuddy/
+
+# Desktop environment trash (never track)
+.Trash-0/
+.Trash-*/

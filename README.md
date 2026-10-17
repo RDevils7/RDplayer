@@ -45,6 +45,25 @@ sudo meson install -C build
 
 见 `flatpak/moe.tsuna.tsukimi.yml`（需将源码地址改为你自己的 fork 后构建）。
 
+### Windows（安装版）
+
+提供 `.exe` 安装程序，由 GitHub Actions 自动构建（基于 MSYS2 UCRT64 + GTK4）。
+
+- **下载安装**：在 [Releases](https://github.com/rdevils7/RDplayer/releases) 获取 `RDplayer-Setup-*-x86_64.exe`，双击即可安装（写入 `C:\Program Files\RDplayer`，创建开始菜单快捷方式并附带卸载程序）。GTK 运行库、gresource、GSettings schema、翻译、图标与 GStreamer 插件均随包自带，无需额外配置。
+- **自行构建（需 Windows + MSYS2 UCRT64 终端）**：
+
+  ```bash
+  pacman -S mingw-w64-ucrt-x86_64-{toolchain,rust,gtk4,libadwaita,mpv,gstreamer,gstreamer-plugins-base,gstreamer-plugins-bad,gstreamer-libav,glycin,glib2,openssl,dbus,gettext,gdk-pixbuf2,libxml2,blueprint-compiler,meson,ninja,pkgconf}
+  meson setup build --prefix=/usr
+  meson compile -C build
+  meson install -C build --destdir artifact
+  bash windows/bundle.sh artifact dist
+  makensis windows/installer.nsi   # 另需安装 NSIS
+  ```
+
+  `windows/bundle.sh` 会从 `meson install` 的目录收集 `rdplayer.exe`、依赖 DLL 与 `share/`、`lib/` 资源；`windows/installer.nsi` 将其打包为安装 exe。
+
+
 ## 配置弹幕服务器
 
 启动后在弹幕设置中填入你的 danmu_api 地址（默认 `http://192.168.5.7:9321/87654321`）。

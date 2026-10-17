@@ -1,0 +1,90 @@
+name: Windows Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+      - "LICENSE"
+  pull_request:
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    name: Windows (x86_64, MSYS2 UCRT64)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Setup MSYS2 (UCRT64) with GTK4 toolchain
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            base-devel
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-rust
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-meson
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-gtk4
+            mingw-w64-ucrt-x86_64-libadwaita
+            mingw-w64-ucrt-x86_64-mpv
+            mingw-w64-ucrt-x86_64-gstreamer
+            mingw-w64-ucrt-x86_64-gstreamer-plugins-base
+            mingw-w64-ucrt-x86_64-gstreamer-plugins-bad
+            mingw-w64-ucrt-x86_64-gstreamer-libav
+            mingw-w64-ucrt-x86_64-glycin
+            mingw-w64-ucrt-x86_64-glib2
+            mingw-w64-ucrt-x86_64-openssl
+            mingw-w64-ucrt-x86_64-dbus
+            mingw-w64-ucrt-x86_64-gettext
+            mingw-w64-ucrt-x86_64-gdk-pixbuf2
+            mingw-w64-ucrt-x86_64-libxml2
+            mingw-w64-ucrt-x86_64-blueprint-compiler
+
+      - name: Build with meson and bundle
+        shell: msys2 {0}
+        env:
+          DANDANAPI_SECRET_KEY: ${{ secrets.DANDANAPI_SECRET_KEY }}
+        run: |
+          meson setup build --prefix=/usr
+          meson compile -C build
+          meson install -C build --destdir "$PWD/artifact"
+          bash windows/bundle.sh "$PWD/artifact" "$PWD/dist"
+
+      - name: Install NSIS
+        run: choco install nsis --no-progress -y
+
+      - name: Build installer
+        shell: cmd
+        run: |
+          cd /d "%GITHUB_WORKSPACE%"
+          makensis windows\installer.nsi
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: RDplayer-Setup-x86_64
+          path: RDplayer-Setup-*.exe
+          archive: false
+
+      - name: Publish release asset
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: RDplayer-Setup-*.exe
