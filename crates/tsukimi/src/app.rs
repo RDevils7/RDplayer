@@ -18,7 +18,6 @@ mod imp {
         },
     };
     use once_cell::sync::Lazy;
-    use url::Url;
 
     use crate::{
         client::jellyfin_client::{
@@ -248,15 +247,6 @@ mod imp {
                 "audio-channels",
                 match_audio_channels(SETTINGS.mpv_audio_channel()),
             )?;
-
-            if let Some(uri) = crate::client::proxy::get_proxy_settings() {
-                let url = if Url::parse(&uri).is_ok() {
-                    uri
-                } else {
-                    format!("http://{uri}")
-                };
-                init.set_option("http-proxy", url.as_str())?;
-            }
 
             init.set_option(
                 "alang",
